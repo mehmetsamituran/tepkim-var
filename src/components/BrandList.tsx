@@ -1,44 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { fetchBrands } from '../services/api';
-import { Brand } from '../types';
+import React from 'react';
 
-const BrandList: React.FC = () => {
-    const [brands, setBrands] = useState<Brand[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+interface Brand {
+    id: number;
+    name: string;
+    description: string;
+}
 
-    useEffect(() => {
-        const loadBrands = async () => {
-            try {
-                const data = await fetchBrands();
-                setBrands(data);
-            } catch (err) {
-                setError('Failed to load brands');
-            } finally {
-                setLoading(false);
-            }
-        };
+interface BrandListProps {
+    brands: Brand[];
+    onUpdate: (id: number, updatedData: any) => void;
+}
 
-        loadBrands();
-    }, []);
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>{error}</div>;
-    }
+const BrandList: React.FC<BrandListProps> = ({ brands, onUpdate }) => {
+    const handleUpdate = (id: number) => {
+        const updatedName = prompt('Enter new brand name:');
+        const updatedDescription = prompt('Enter new brand description:');
+        if (updatedName && updatedDescription) {
+            onUpdate(id, { name: updatedName, description: updatedDescription });
+        }
+    };
 
     return (
-        <div>
-            <h2>Boycott Brands</h2>
+        <div className="brand-list">
             <ul>
                 {brands.map((brand) => (
                     <li key={brand.id}>
-                        <span>{brand.name}</span>
-                        <p>{brand.description}</p>
-                        <button>Vote to Boycott</button>
+                        {brand.name} - {brand.description}{' '}
+                        <button onClick={() => handleUpdate(brand.id)}>Edit</button>
                     </li>
                 ))}
             </ul>

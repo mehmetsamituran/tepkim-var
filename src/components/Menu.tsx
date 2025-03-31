@@ -67,9 +67,26 @@ const Menu: React.FC<MenuProps> = ({ menuOpen, setMenuOpen }) => {
           backgroundColor: colors.categoriesBackground,
           textAlign: 'center',
           fontWeight: 'bold',
+          marginBottom: '10px',
         }}
       >
         Hakkında
+      </div>
+      <div
+        onClick={() => {
+          router.push('/AdminPage'); // AdminPage'e yönlendirme
+          setMenuOpen(false);
+        }}
+        style={{
+          cursor: 'pointer',
+          padding: '10px',
+          borderRadius: '4px',
+          backgroundColor: colors.categoriesBackground,
+          textAlign: 'center',
+          fontWeight: 'bold',
+        }}
+      >
+        Admin Panel
       </div>
     </div>
   );

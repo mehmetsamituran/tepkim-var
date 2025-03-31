@@ -12,10 +12,15 @@
   ],
   "rootMainFiles": [],
   "pages": {
-    "/": [
+    "/AdminPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/index.js"
+      "static/chunks/pages/AdminPage.js"
+    ],
+    "/Hakkinda": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/Hakkinda.js"
     ],
     "/HomePage": [
       "static/chunks/webpack.js",

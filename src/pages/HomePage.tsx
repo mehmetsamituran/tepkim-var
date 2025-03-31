@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from '../components/Modal';
-import Menu from '../components/Menu';
+import PageLayout from '../components/PageLayout';
 
 const HomePage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -8,9 +8,6 @@ const HomePage: React.FC = () => {
     title: '',
     borderColor: '',
   });
-
-  // Menü için state
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const openModal = (title: string, borderColor: string) => {
     setModalProps({ title, borderColor });
@@ -22,37 +19,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        textAlign: 'center',
-        padding: '20px',
-        fontFamily: 'Arial, sans-serif',
-        position: 'relative', // Konumlandırma için gerekli
-      }}
-    >
-      {/* Hamburger Menü Butonu */}
-      {!menuOpen && ( // Menü kapalıyken göster
-        <button
-          onClick={() => setMenuOpen(true)} // Menü açılır
-          style={{
-            position: 'absolute',
-            top: '10px',
-            left: '10px',
-            background: 'none',
-            border: 'none',
-            fontSize: '24px',
-            cursor: 'pointer',
-            zIndex: 1100, // Menü butonu diğer içeriklerin üstünde olsun
-          }}
-        >
-          ☰
-        </button>
-      )}
-
-      {/* Menü Bileşeni */}
-      <Menu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-
-      <h1>Tepkim var!</h1>
+    <PageLayout title="Tepkim Var!">
       <div
         style={{
           display: 'flex',
@@ -61,7 +28,6 @@ const HomePage: React.FC = () => {
           marginTop: '20px',
         }}
       >
-        {/* Boykot Et Butonu */}
         <button
           onClick={() => openModal('Boykot et!', 'red')}
           style={{
@@ -72,15 +38,10 @@ const HomePage: React.FC = () => {
             borderRadius: '5px',
             cursor: 'pointer',
             fontSize: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
           }}
         >
-          <span>❌</span> Boykot et!
+          Boykot Et
         </button>
-
-        {/* Onurlandır Butonu */}
         <button
           onClick={() => openModal('Onurlandır!', 'green')}
           style={{
@@ -91,23 +52,18 @@ const HomePage: React.FC = () => {
             borderRadius: '5px',
             cursor: 'pointer',
             fontSize: '16px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
           }}
         >
-          <span>✅</span> Onurlandır!
+          Onurlandır
         </button>
       </div>
-
-      {/* Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
         title={modalProps.title}
         borderColor={modalProps.borderColor}
       />
-    </div>
+    </PageLayout>
   );
 };
 

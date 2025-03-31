@@ -1,36 +1,83 @@
 import React, { useEffect, useState } from 'react';
-import { fetchBrands, fetchVotes } from '../services/api';
+import { fetchBrands, fetchCategories } from '../services/api';
 import BrandList from '../components/BrandList';
-import VoteList from '../components/VoteList';
+import CategoryList from '../components/CategoryList';
+import PageLayout from '../components/PageLayout';
 
 const AdminPage: React.FC = () => {
-    const [brands, setBrands] = useState([]);
-    const [votes, setVotes] = useState([]);
+  interface Brand {
+    id: number;
+    name: string;
+    description: string;
+  }
 
-    useEffect(() => {
-        const loadBrands = async () => {
-            const brandData = await fetchBrands();
-            setBrands(brandData);
-        };
+  interface Category {
+    id: number;
+    name: string;
+  }
 
-        const loadVotes = async () => {
-            const voteData = await fetchVotes();
-            setVotes(voteData);
-        };
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-        loadBrands();
-        loadVotes();
-    }, []);
+  useEffect(() => {
+    const loadBrands = async () => {
+      try {
+        const brandData = await fetchBrands();
+        if (Array.isArray(brandData)) {
+          setBrands(brandData as Brand[]);
+        } else {
+          setError('Invalid data format for brands.');
+        }
+      } catch (err) {
+        setError('Failed to fetch brands.');
+      }
+    };
 
-    return (
-        <div className="admin-page">
-            <h1>Admin Panel</h1>
-            <h2>Manage Brands</h2>
-            <BrandList brands={brands} />
-            <h2>View Votes</h2>
-            <VoteList votes={votes} />
-        </div>
-    );
+    const loadCategories = async () => {
+      try {
+        const categoryData = await fetchCategories();
+        if (Array.isArray(categoryData)) {
+          setCategories(categoryData as Category[]);
+        } else {
+          setError('Invalid data format for categories.');
+        }
+      } catch (err) {
+        setError('Failed to fetch categories.');
+      }
+    };
+
+    loadBrands();
+    loadCategories();
+  }, []);
+
+  return (
+    <PageLayout title="Admin Panel">
+      {error && <div style={{ color: 'red' }}>Error: {error}</div>}
+      <h2>Manage Brands</h2>
+      <BrandList 
+        brands={brands} 
+        onUpdate={(id, updatedData) => {
+          setBrands(prevBrands => 
+            prevBrands.map(brand => 
+              brand.id === id ? { ...brand, ...updatedData } : brand
+            )
+          );
+        }} 
+      />
+      <h2>Manage Categories</h2>
+      <CategoryList 
+        categories={categories} 
+        onUpdate={(id, updatedData) => {
+          setCategories(prevCategories => 
+            prevCategories.map(category => 
+              category.id === id ? { ...category, ...updatedData } : category
+            )
+          );
+        }} 
+      />
+    </PageLayout>
+  );
 };
 
 export default AdminPage;
