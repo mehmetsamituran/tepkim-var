@@ -14,7 +14,9 @@ const Hakkinda = () => {
       <h1>Hakkında</h1>
       <p>
         Bu uygulama toplumun markalara ve olan durumlara karşı tepkisini göstermek üzere
-        kurulmuştur.
+        kurulmuştur. 
+
+        Vallaha billaha bir şeyler yapmaya çalışıyoruz.
       </p>
     </div>
   );
