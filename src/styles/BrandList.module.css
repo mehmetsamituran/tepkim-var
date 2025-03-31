@@ -1,0 +1,50 @@
+.brandList {
+  list-style: none;
+  padding: 0;
+}
+
+.brandItem {
+  background: #fff;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+.brandLogo {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.brandName {
+  font-weight: bold;
+}
+
+.brandDescription {
+  margin: 5px 0;
+}
+
+.brandFlags {
+  display: flex;
+  gap: 10px;
+}
+
+.redFlag::before {
+  content: '🚩';
+  margin-right: 5px;
+  color: red;
+}
+
+.whiteFlag::before {
+  content: '⚪';
+  margin-right: 5px;
+  color: gray;
+}
+
+.greenFlag::before {
+  content: '✅';
+  margin-right: 5px;
+  color: green;
+}
